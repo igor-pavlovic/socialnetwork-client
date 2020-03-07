@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import Grid from "@material-ui/core/Grid";
+import Story from "../components/Story";
 
 class Home extends Component {
   state = {
@@ -9,18 +10,19 @@ class Home extends Component {
   };
   componentDidMount() {
     axios.get("/stories").then(res => {
-      console.log(res.data);
       this.setState({ stories: res.data });
     });
   }
   render() {
     let recentStoriesMarkup = this.state.stories ? (
-      this.state.stories.map(story => <p>{story.body}</p>)
+      this.state.stories.map(story => (
+        <Story key={story.storyId} story={story} />
+      ))
     ) : (
       <p>Loading...</p>
     );
     return (
-      <Grid container spacing={16}>
+      <Grid container spacing={4}>
         <Grid item sm={8} xs={12}>
           {recentStoriesMarkup}
         </Grid>
