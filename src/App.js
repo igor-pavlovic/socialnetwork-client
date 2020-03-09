@@ -1,64 +1,68 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import jwtDecode from "jwt-decode";
+
+// Redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
+// Theme
+import themeFile from "./util/theme";
+
+// Utils
+import AuthRoute from "./util/AuthRoute";
 
 // Components
 import Navbar from "./components/Navbar";
+
 // Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#33c9dc",
-      main: "#00bcd4",
-      dark: "#008394",
-      contrastText: "#fff"
-    },
-    secondary: {
-      light: "#ff6333",
-      main: "#ff3d00",
-      dark: "#b22a00",
-      contrastText: "#fff"
-    }
-  },
-  typography: {
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"'
-    ].join(","),
-    useNextVariants: true
-  }
-});
+const theme = createMuiTheme(themeFile);
+
+let authenticated;
+
+const token = localStorage.FBidToken;
+if (token) {
+  const decodedToken = jwtDecode(token);
+  console.log(decodedToken);
+  if (decodedToken.exp * 1000 < Date.now()) {
+    window.location.href = "/login";
+    authenticated = false;
+  } else authenticated = true;
+}
 
 function App() {
   return (
-    <MuiThemeProvider theme={theme}>
-      <div className="App">
+    <Provider store={store}>
+      <MuiThemeProvider theme={theme}>
         <Router>
           <Navbar />
           <div className="container">
             <Switch>
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
               <Route exact path="/" component={Home} />
+              <AuthRoute
+                exact
+                path="/login"
+                component={Login}
+                authenticated={authenticated}
+              />
+              <AuthRoute
+                exact
+                path="/signup"
+                component={Signup}
+                authenticated={authenticated}
+              />
             </Switch>
           </div>
         </Router>
-      </div>
-    </MuiThemeProvider>
+      </MuiThemeProvider>
+    </Provider>
   );
 }
 
