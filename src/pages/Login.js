@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+// Redux stuff
+import { connect } from "react-redux";
+import { loginUser } from "../redux/actions/userActions";
+
 // Images
 import AppIcon from "../images/logo.png";
 
@@ -12,10 +16,6 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-// Redux stuff
-import { connect } from "react-redux";
-import { loginUser } from "../redux/actions/userActions";
 
 const styles = theme => {
   return { ...theme.spreadThis };
@@ -45,6 +45,13 @@ class Login extends Component {
       [event.target.name]: event.target.value
     });
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }
+
   render() {
     const {
       classes,

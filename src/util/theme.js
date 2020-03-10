@@ -46,7 +46,7 @@ export default {
       position: "relative"
     },
     customError: {
-      color: "#fff",
+      color: "red",
       fontSize: "0.8rem"
     },
     progress: {

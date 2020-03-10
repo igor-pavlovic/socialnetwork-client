@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+// MUI stuff
 import Grid from "@material-ui/core/Grid";
+
+// Components
 import Story from "../components/Story";
 
 class Home extends Component {

@@ -30,15 +30,7 @@ class Story extends Component {
 
     const {
       classes,
-      story: {
-        body,
-        createdAt,
-        userImage,
-        userHandle,
-        storyId,
-        likeCount,
-        commentCount
-      }
+      story: { body, createdAt, userImage, userHandle }
     } = this.props;
 
     return (
