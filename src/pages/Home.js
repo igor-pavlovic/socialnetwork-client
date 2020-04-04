@@ -1,40 +1,53 @@
 import React, { Component } from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
+
+// Redux
+import { connect } from "react-redux";
+import { getStories } from "../redux/actions/dataActions";
 
 // MUI stuff
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 // Components
 import Story from "../components/Story";
+import Profile from "../components/Profile";
 
 class Home extends Component {
-  state = {
-    stories: null
-  };
   componentDidMount() {
-    axios.get("/stories").then(res => {
-      this.setState({ stories: res.data });
-    });
+    this.props.getStories();
   }
   render() {
-    let recentStoriesMarkup = this.state.stories ? (
-      this.state.stories.map(story => (
-        <Story key={story.storyId} story={story} />
-      ))
+    const { stories, loading } = this.props.data;
+    let recentStoriesMarkup = !loading ? (
+      stories.map(story => <Story key={story.storyId} story={story} />)
     ) : (
-      <p>Loading...</p>
+      <div style={{ textAlign: "center" }}>
+        <Typography variant="body2" style={{ margin: "50% auto" }}>
+          Loading...
+        </Typography>
+      </div>
     );
     return (
-      <Grid container spacing={4}>
+      <Grid container spacing={3}>
         <Grid item sm={8} xs={12}>
           {recentStoriesMarkup}
         </Grid>
         <Grid item sm={4} xs={12}>
-          <p>Profile...</p>
+          <Profile />
         </Grid>
       </Grid>
     );
   }
 }
 
-export default Home;
+Home.propTypes = {
+  getStories: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  data: state.data
+});
+
+export default connect(mapStateToProps, { getStories })(Home);
