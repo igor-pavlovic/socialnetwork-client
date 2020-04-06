@@ -2,11 +2,11 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 
 // Components
-import TooltipButton from "./TooltipButton";
+import TooltipButton from "../TooltipButton";
 
 // Redux
 import { connect } from "react-redux";
-import { editUserDetails } from "../redux/actions/userActions";
+import { editUserDetails } from "../../redux/actions/userActions";
 
 // MUI stuff
 import Button from "@material-ui/core/Button";
@@ -14,6 +14,7 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 // MUI Icons
@@ -93,6 +94,9 @@ class EditDetails extends Component {
         >
           <DialogTitle>Edit your details</DialogTitle>
           <DialogContent>
+            <DialogContentText>
+              Please edit fields you would like to change:
+            </DialogContentText>
             <form>
               <TextField
                 name="bio"

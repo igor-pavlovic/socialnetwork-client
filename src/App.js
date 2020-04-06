@@ -19,7 +19,7 @@ import themeFile from "./util/theme";
 import AuthRoute from "./util/AuthRoute";
 
 // Components
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 
 // Pages
 import Home from "./pages/Home";

@@ -29,6 +29,9 @@ export default {
     useNextVariants: true
   },
   spreadThis: {
+    dialog: {
+      textAlign: "center"
+    },
     form: {
       textAlign: "center"
     },
@@ -51,6 +54,24 @@ export default {
     },
     progress: {
       position: "absolute"
+    },
+    actionButtonContainer: {
+      marginTop: 40
+    },
+    actionButtonText: {
+      marginRight: 30
+    },
+    actionButton: {
+      marginRight: 5
+    },
+    invisibleSeparator: {
+      border: "none",
+      margin: 5
+    },
+    visibleSeparator: {
+      width: "100%",
+      border: "1px solid rgba(0,0,0,0.1)",
+      margin: "10px 0"
     }
   }
 };

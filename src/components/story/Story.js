@@ -4,15 +4,16 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 // Components
-import TooltipButton from "./TooltipButton";
+import TooltipButton from "../TooltipButton";
 import DeleteStory from "./DeleteStory";
+import StoryDialog from "./StoryDialog";
+import LikeButton from "./LikeButton";
 
 // Router
 import { Link } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
-import { likeStory, unlikeStory } from "../redux/actions/dataActions";
 
 // MUI Stuff
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -23,10 +24,9 @@ import Typography from "@material-ui/core/Typography";
 
 // MUI Icons
 import ChatIcon from "@material-ui/icons/Chat";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
-const styles = {
+const styles = theme => ({
+  ...theme.spreadThis,
   card: {
     position: "relative",
     display: "flex",
@@ -43,28 +43,9 @@ const styles = {
   body: {
     margin: "10px 0 40px 0"
   }
-};
+});
 
 class Story extends Component {
-  likedStory = () => {
-    if (
-      this.props.user.likes &&
-      this.props.user.likes.find(
-        like => like.storyId === this.props.story.storyId
-      )
-    )
-      return true;
-    else return false;
-  };
-
-  likeStory = () => {
-    this.props.likeStory(this.props.story.storyId);
-  };
-
-  unlikeStory = () => {
-    this.props.unlikeStory(this.props.story.storyId);
-  };
-
   render() {
     dayjs.extend(relativeTime);
 
@@ -85,21 +66,6 @@ class Story extends Component {
       }
     } = this.props;
 
-    const likeButton = !authenticated ? (
-      <TooltipButton tip="Like">
-        <Link to="/login">
-          <FavoriteBorderIcon color="primary" />
-        </Link>
-      </TooltipButton>
-    ) : this.likedStory() ? (
-      <TooltipButton tip="Unlike" onClick={this.unlikeStory}>
-        <FavoriteIcon color="primary" />
-      </TooltipButton>
-    ) : (
-      <TooltipButton tip="Like" onClick={this.likeStory}>
-        <FavoriteBorderIcon color="primary" />
-      </TooltipButton>
-    );
     const deleteButton =
       authenticated && authUserHandle === userHandle ? (
         <DeleteStory storyId={storyId} />
@@ -128,15 +94,19 @@ class Story extends Component {
             {body}
           </Typography>
 
-          <Typography variant="caption">
-            {likeButton} {likeCount} likes {"      "}
-            <TooltipButton tip="Comments">
+          <div className={classes.actionButtonContainer}>
+            <LikeButton storyId={storyId} />
+            <Typography variant="caption" className={classes.actionButtonText}>
+              {likeCount} likes
+            </Typography>
+            <TooltipButton tip="Comments" btnClassName={classes.actionButton}>
               <ChatIcon color="primary" />
             </TooltipButton>
-            {commentCount} comments
-          </Typography>
-
-          <Typography variant="body2"></Typography>
+            <Typography variant="caption" className={classes.actionButtonText}>
+              {commentCount} comments
+            </Typography>
+            <StoryDialog storyId={storyId} user={userHandle} />
+          </div>
         </CardContent>
       </Card>
     );
@@ -144,8 +114,6 @@ class Story extends Component {
 }
 
 Story.propTypes = {
-  likeStory: PropTypes.func.isRequired,
-  unlikeStory: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   story: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired
@@ -155,12 +123,4 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-const mapActionsToProps = {
-  likeStory,
-  unlikeStory
-};
-
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(withStyles(styles)(Story));
+export default connect(mapStateToProps, {})(withStyles(styles)(Story));

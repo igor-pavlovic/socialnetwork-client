@@ -4,14 +4,14 @@ import dayjs from "dayjs";
 
 // Components
 import EditDetails from "./EditDetails";
-import TooltipButton from "./TooltipButton";
+import TooltipButton from "../TooltipButton";
 
 // Router
 import { Link } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
-import { logoutUser, uploadImage } from "../redux/actions/userActions";
+import { logoutUser, uploadImage } from "../../redux/actions/userActions";
 
 // MUI stuff
 import withStyles from "@material-ui/core/styles/withStyles";

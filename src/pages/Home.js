@@ -10,8 +10,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 // Components
-import Story from "../components/Story";
-import Profile from "../components/Profile";
+import Story from "../components/story/Story";
+import Profile from "../components/profile/Profile";
 
 class Home extends Component {
   componentDidMount() {

@@ -3,7 +3,14 @@ import {
   LOADING_DATA,
   LIKE_STORY,
   UNLIKE_STORY,
-  DELETE_STORY
+  DELETE_STORY,
+  SET_ERRORS,
+  CLEAR_ERRORS,
+  LOADING_UI,
+  POST_STORY,
+  SET_STORY,
+  STOP_LOADING_UI,
+  SUBMIT_COMMENT
 } from "../types";
 import axios from "axios";
 
@@ -17,6 +24,40 @@ export const getStories = () => dispatch => {
     })
     .catch(err => {
       dispatch({ type: SET_STORIES, payload: [] });
+    });
+};
+
+// Get one story
+
+export const getStory = storyId => dispatch => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .get(`/story/${storyId}`)
+    .then(res => {
+      dispatch({ type: SET_STORY, payload: res.data });
+      dispatch({ type: STOP_LOADING_UI });
+    })
+    .catch(err => console.log(err));
+};
+
+// Post a story
+export const postStory = newStory => dispatch => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post("/story", newStory)
+    .then(res => {
+      dispatch({
+        type: POST_STORY,
+        payload: res.data
+      });
+      dispatch(clearErrors());
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      });
     });
 };
 
@@ -46,6 +87,23 @@ export const unlikeStory = storyId => dispatch => {
     .catch(err => console.log(err));
 };
 
+// Submit a comment
+export const submitComment = (storyId, commentData) => dispatch => {
+  axios
+    .post(`/story/${storyId}/comment`, commentData)
+    .then(res => {
+      dispatch({
+        type: SUBMIT_COMMENT,
+        payload: { storyId: storyId, comment: res.data }
+      });
+      dispatch(clearErrors());
+    })
+    .catch(err => {
+      dispatch({ type: SET_ERRORS, payload: err.response.data });
+      console.log(err);
+    });
+};
+
 // Delete a story
 export const deleteStory = storyId => dispatch => {
   axios
@@ -53,5 +111,11 @@ export const deleteStory = storyId => dispatch => {
     .then(() => {
       dispatch({ type: DELETE_STORY, payload: storyId });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+export const clearErrors = () => dispatch => {
+  dispatch({ type: CLEAR_ERRORS });
 };

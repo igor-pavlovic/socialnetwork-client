@@ -2,11 +2,11 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 
 // Components
-import TooltipButton from "./TooltipButton";
+import TooltipButton from "../TooltipButton";
 
 // Redux
 import { connect } from "react-redux";
-import { deleteStory } from "../redux/actions/dataActions";
+import { deleteStory } from "../../redux/actions/dataActions";
 
 // MUI Stuff
 import withStyles from "@material-ui/core/styles/withStyles";
