@@ -2,9 +2,6 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 
-// Components
-import TooltipButton from "../TooltipButton";
-
 // Router
 import { Link } from "react-router-dom";
 
@@ -18,7 +15,6 @@ import Paper from "@material-ui/core/Paper";
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
 import CalendarToday from "@material-ui/icons/CalendarToday";
-import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 const styles = (theme) => ({
   paper: {
