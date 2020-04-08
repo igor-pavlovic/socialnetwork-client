@@ -30,7 +30,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 // MUI stuff
 import withStyles from "@material-ui/core/styles/withStyles";
 
-const styles = theme => ({
+const styles = (theme) => ({
   ...theme.spreadThis,
 
   profileImage: {
@@ -41,36 +41,53 @@ const styles = theme => ({
     borderRadius: "50%",
     objectFit: "cover",
     display: "block",
-    margin: "0 auto"
+    margin: "0 auto",
   },
   dialogContent: {
-    padding: 40
+    padding: 40,
   },
   closeButton: {
     position: "absolute",
-    left: "95%"
+    left: "95%",
   },
   expandButton: {
     position: "absolute",
-    left: "90%"
+    left: "90%",
   },
   spinnerDiv: {
     textAlign: "center",
-    margin: "50px 0"
-  }
+    margin: "50px 0",
+  },
 });
 
 class StoryDialog extends Component {
   state = {
-    open: false
+    open: false,
+    oldPath: "",
+    newPath: "",
   };
 
+  componentDidMount() {
+    if (this.props.openDialog) {
+      this.handleOpen();
+    }
+  }
   handleOpen = () => {
-    this.setState({ open: true });
+    let oldPath = window.location.pathname;
+
+    const { userHandle, storyId } = this.props;
+    const newPath = `/users/${userHandle}/story/${storyId}`;
+
+    if (oldPath === newPath) oldPath = `/users/${userHandle}`;
+
+    window.history.pushState(null, null, newPath);
+
+    this.setState({ open: true, oldPath, newPath });
     this.props.getStory(this.props.storyId);
   };
 
   handleClose = () => {
+    window.history.pushState(null, null, this.state.oldPath);
     this.setState({ open: false });
     this.props.clearErrors();
   };
@@ -86,9 +103,9 @@ class StoryDialog extends Component {
         commentCount,
         userImage,
         userHandle,
-        comments
+        comments,
       },
-      UI: { loading }
+      UI: { loading },
     } = this.props;
 
     const dialogMarkup = loading ? (
@@ -170,17 +187,17 @@ StoryDialog.propTypes = {
   storyId: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
   story: PropTypes.object.isRequired,
-  UI: PropTypes.object.isRequired
+  UI: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   story: state.data.story,
-  UI: state.UI
+  UI: state.UI,
 });
 
 const mapActionsToProps = {
   getStory,
-  clearErrors
+  clearErrors,
 };
 
 export default connect(

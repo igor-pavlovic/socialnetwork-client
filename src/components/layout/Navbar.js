@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 // Components
 import TooltipButton from "../TooltipButton";
 import PostStory from "../story/PostStory";
+import Notifications from "./Notifications";
 
 // Router
 import { Link } from "react-router-dom";
@@ -18,7 +19,6 @@ import Button from "@material-ui/core/Button";
 
 // MUI Icons
 import HomeIcon from "@material-ui/icons/Home";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 
 export class Navbar extends Component {
   render() {
@@ -34,9 +34,7 @@ export class Navbar extends Component {
                   <HomeIcon />
                 </TooltipButton>
               </Link>
-              <TooltipButton tip="Notifications">
-                <NotificationsIcon />
-              </TooltipButton>
+              <Notifications />
             </Fragment>
           ) : (
             <Fragment>
@@ -58,11 +56,11 @@ export class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  authenticated: PropTypes.bool.isRequired
+  authenticated: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-  authenticated: state.user.authenticated
+const mapStateToProps = (state) => ({
+  authenticated: state.user.authenticated,
 });
 
 export default connect(mapStateToProps)(Navbar);

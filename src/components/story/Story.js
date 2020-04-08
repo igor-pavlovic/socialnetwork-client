@@ -25,24 +25,24 @@ import Typography from "@material-ui/core/Typography";
 // MUI Icons
 import ChatIcon from "@material-ui/icons/Chat";
 
-const styles = theme => ({
+const styles = (theme) => ({
   ...theme.spreadThis,
   card: {
     position: "relative",
     display: "flex",
-    marginBottom: 15
+    marginBottom: 15,
   },
   image: {
     minWidth: 200,
-    minHeight: 200
+    minHeight: 200,
   },
   content: {
     padding: "30px 45px 50px 50px",
-    objectFit: "cover"
+    objectFit: "cover",
   },
   body: {
-    margin: "10px 0 40px 0"
-  }
+    margin: "10px 0 40px 0",
+  },
 });
 
 class Story extends Component {
@@ -58,12 +58,12 @@ class Story extends Component {
         storyId,
         userHandle,
         likeCount,
-        commentCount
+        commentCount,
       },
       user: {
         authenticated,
-        credentials: { userHandle: authUserHandle }
-      }
+        credentials: { userHandle: authUserHandle },
+      },
     } = this.props;
 
     const deleteButton =
@@ -105,7 +105,11 @@ class Story extends Component {
             <Typography variant="caption" className={classes.actionButtonText}>
               {commentCount} comments
             </Typography>
-            <StoryDialog storyId={storyId} user={userHandle} />
+            <StoryDialog
+              storyId={storyId}
+              userHandle={userHandle}
+              openDialog={this.props.openDialog}
+            />
           </div>
         </CardContent>
       </Card>
@@ -116,11 +120,12 @@ class Story extends Component {
 Story.propTypes = {
   user: PropTypes.object.isRequired,
   story: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  openDialog: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
 export default connect(mapStateToProps, {})(withStyles(styles)(Story));

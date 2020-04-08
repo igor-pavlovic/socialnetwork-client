@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 // Components
 import EditDetails from "./EditDetails";
 import TooltipButton from "../TooltipButton";
+import ProfileSkeleton from "../../util/ProfileSkeleton";
 
 // Router
 import { Link } from "react-router-dom";
@@ -27,9 +28,9 @@ import CalendarToday from "@material-ui/icons/CalendarToday";
 import EditIcon from "@material-ui/icons/Edit";
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
-    padding: 20
+    padding: 20,
   },
   profile: {
     "& .image-wrapper": {
@@ -38,45 +39,45 @@ const styles = theme => ({
       "& button": {
         position: "absolute",
         top: "80%",
-        left: "70%"
-      }
+        left: "70%",
+      },
     },
     "& .profile-image": {
       width: 200,
       height: 200,
       objectFit: "cover",
       maxWidth: "100%",
-      borderRadius: "50%"
+      borderRadius: "50%",
     },
     "& .profile-details": {
       textAlign: "center",
       "& span, svg": {
-        verticalAlign: "middle"
+        verticalAlign: "middle",
       },
       "& a": {
-        color: theme.palette.primary.main
-      }
+        color: theme.palette.primary.main,
+      },
     },
     "& hr": {
       border: "none",
-      margin: "0 0 10px 0"
+      margin: "0 0 10px 0",
     },
     "& svg.button": {
       "&:hover": {
-        cursor: "pointer"
-      }
-    }
+        cursor: "pointer",
+      },
+    },
   },
   buttons: {
     textAlign: "center",
     "& a": {
-      margin: "20px 10px"
-    }
-  }
+      margin: "20px 10px",
+    },
+  },
 });
 
 export class Profile extends Component {
-  handleImageChange = event => {
+  handleImageChange = (event) => {
     const image = event.target.files[0];
     // send to server
     const formData = new FormData();
@@ -100,19 +101,15 @@ export class Profile extends Component {
           imageUrl,
           bio,
           website,
-          location
+          location,
         },
         loading,
-        authenticated
-      }
+        authenticated,
+      },
     } = this.props;
 
     let profileMarkup = loading ? (
-      <div style={{ textAlign: "center" }}>
-        <Typography variant="body2" style={{ margin: "50% auto" }}>
-          Loading...
-        </Typography>
-      </div>
+      <ProfileSkeleton />
     ) : authenticated ? (
       <Paper className={classes.paper}>
         <div className={classes.profile}>
@@ -200,8 +197,8 @@ export class Profile extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
 const mapActionsToProps = { logoutUser, uploadImage };
@@ -210,7 +207,7 @@ Profile.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   uploadImage: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default connect(
