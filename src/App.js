@@ -27,6 +27,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import User from "./pages/User.js";
 
+axios.defaults.baseURL =
+  "https://europe-west1-orion-socialnetwork.cloudfunctions.net/api";
+
 const theme = createMuiTheme(themeFile);
 
 const token = localStorage.FBidToken;
