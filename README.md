@@ -5,6 +5,11 @@ Google Firebase Functions app which serves as REST API for [Social Network](http
 Site: </br>
 [Social Network](https://bit.ly/2ABep1S) 
 
+## API
+Route: </br>
+[https://europe-west1-orion-socialnetwork.cloudfunctions.net/api/](https://europe-west1-orion-socialnetwork.cloudfunctions.net/api/)
+
+---
 ## Stack
 React & Redux front-end, hosted on Google Firebase Hosting.
 
