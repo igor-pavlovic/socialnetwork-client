@@ -1,5 +1,5 @@
-# socialnetwork-functions
-React & Redux front-end, hosted on Google Firebase Hosting. 
+# socialnetwork-client
+React & Redux front-end client, hosted on Google Firebase Hosting. 
 
 Find the REST API repository [here](https://github.com/6Orion/socialnetwork-functions).
 
