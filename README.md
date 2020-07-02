@@ -1,5 +1,7 @@
 # socialnetwork-functions
-Google Firebase Functions app which serves as REST API for [Social Network](https://bit.ly/2ABep1S). Find the REST API code [here](https://github.com/6Orion/socialnetwork-functions).
+React & Redux front-end, hosted on Google Firebase Hosting. 
+
+Find the REST API repository [here](https://github.com/6Orion/socialnetwork-functions).
 
 ## Demo
 Site: </br>
@@ -10,8 +12,8 @@ Route: </br>
 [https://europe-west1-orion-socialnetwork.cloudfunctions.net/api/](https://europe-west1-orion-socialnetwork.cloudfunctions.net/api/)
 
 ---
-## Stack
+### Stack
 React & Redux front-end, hosted on Google Firebase Hosting.
 
-## UI Framework
+### UI Framework
 [Material UI](https://material-ui.com) - React framework
